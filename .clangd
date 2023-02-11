@@ -1,5 +1,6 @@
 CompileFlags:
   Add: [-Wall, -Wextra, -Wpedantic,  
+        -I/home/dc/Documents/PlatformIO/Projects/TicTacToe/include/,
         -I/home/dc/.platformio/packages/framework-arduino-avr/cores/arduino/,
         -I/home/dc/.platformio/packages/framework-arduino-avr/bootloaders/stk500v2/,
         -I/home/dc/.platformio/packages/framework-arduino-avr/bootloaders/caterina/,
