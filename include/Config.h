@@ -35,8 +35,8 @@ constexpr static uint8_t BUTTONS_ROWS[] = {A3, A4, A5};
 
 static_assert(ARRAY_SIZE(GREEN_COLS) == ARRAY_SIZE(RED_COLS), "Expect green and red to be of same size");
 
-#define ROW_COUNT        ARRAY_SIZE(ROWS)
-#define COL_COUNT        ARRAY_SIZE(GREEN_COLS)
+#define LED_ROW_COUNT    ARRAY_SIZE(ROWS)
+#define LED_COL_COUNT    ARRAY_SIZE(GREEN_COLS)
 #define PIN_COUNT        ARRAY_SIZE(PINS)
 #define BUTTON_ROW_COUNT ARRAY_SIZE(BUTTONS_ROWS)
 #define BUTTON_COL_COUNT ARRAY_SIZE(BUTTONS_COLS)
