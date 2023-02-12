@@ -6,7 +6,7 @@
 #include <CellType.h>
 #include <Config.h>
 
-static inline void turnOffAll() {
+static inline void turnOffAllLEDs() {
   for (uint8_t i = 0; i < ROW_COUNT; i++) {
     digitalWrite(ROWS[i], HIGH);
   }
