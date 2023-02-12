@@ -45,15 +45,15 @@ static inline GameState stateFromArray(const uint8_t (&statearr)[rows][cols]) {
   state.player = PLAYER_X;
   for (uint8_t i = 0; i < rows; i++) {
     for (uint8_t j = 0; j < cols; j++) {
-      if (statearr[i][j] & CELL_X) { state.crosses |= 1 << ((i * COL_COUNT) + j); }
-      if (statearr[i][j] & CELL_O) { state.noughts |= 1 << ((i * COL_COUNT) + j); }
+      if (statearr[i][j] & CELL_X) { state.crosses |= 1 << ((i * cols) + j); }
+      if (statearr[i][j] & CELL_O) { state.noughts |= 1 << ((i * cols) + j); }
     }
   }
   return state;
 }
 
 static inline GameState trySetCell(GameState state, uint8_t row, uint8_t col) {
-  uint32_t mask = 1 << (row * ROW_COUNT + col);
+  uint32_t mask = 1 << (row * 3 + col);
   if (state.player == PLAYER_X && !(state.noughts & mask)) {
     state.player = PLAYER_O * !(state.crosses & mask);
     state.crosses |= mask;
@@ -82,7 +82,7 @@ static inline GameWinPosition tryDetectWinOf(uint16_t matrix) {
   if (ELEM(matrix, 0, 0) != 0 && ELEM(matrix, 0, 0) == ELEM(matrix, 1, 1) && ELEM(matrix, 1, 1) == ELEM(matrix, 2, 2)) {
     return DIA_1;
   }
-  if (ELEM(matrix, 0, 2) != 0 && ELEM(matrix, 0, 2) == ELEM(matrix, 1, 1) && ELEM(matrix, 1, 1) == ELEM(matrix, 2, 2)) {
+  if (ELEM(matrix, 0, 2) != 0 && ELEM(matrix, 0, 2) == ELEM(matrix, 1, 1) && ELEM(matrix, 1, 1) == ELEM(matrix, 2, 0)) {
     return DIA_2;
   }
 

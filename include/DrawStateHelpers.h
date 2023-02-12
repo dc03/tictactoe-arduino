@@ -10,8 +10,8 @@
 
 static inline void drawGameState(GameState state) {
   uint32_t mask = 1;
-  for (uint8_t i = 0; i < ROW_COUNT; i++) {
-    for (uint8_t j = 0; j < COL_COUNT; j++) {
+  for (uint8_t i = 0; i < 3; i++) {
+    for (uint8_t j = 0; j < 3; j++) {
       if (state.crosses & mask) {
         turnOnLED(CELL_X, i, j);
         DELAY_FUNCTION(DELAY);
@@ -28,8 +28,8 @@ static inline void drawGameState(GameState state) {
 }
 
 static inline void drawGameRow(GameState state, uint8_t row) {
-  for (uint8_t j = 0; j < COL_COUNT; j++) {
-    uint16_t mask = 1 << ((row * COL_COUNT) + j);
+  for (uint8_t j = 0; j < 3; j++) {
+    uint16_t mask = 1 << ((row * 3) + j);
     if (state.crosses & mask) {
       turnOnLED(CELL_X, row, j);
       DELAY_FUNCTION(DELAY);
@@ -44,8 +44,8 @@ static inline void drawGameRow(GameState state, uint8_t row) {
 }
 
 static inline void drawGameCol(GameState state, uint8_t col) {
-  for (uint8_t i = 0; i < ROW_COUNT; i++) {
-    uint16_t mask = 1 << ((i * COL_COUNT) + col);
+  for (uint8_t i = 0; i < 3; i++) {
+    uint16_t mask = 1 << ((i * 3) + col);
     if (state.crosses & mask) {
       turnOnLED(CELL_X, i, col);
       DELAY_FUNCTION(DELAY);
@@ -62,12 +62,12 @@ static inline void drawGameCol(GameState state, uint8_t col) {
 static inline void drawGameDiag(GameState state, bool ismain) {
   if (ismain) {
     for (uint8_t i = 0; i < 3; i++) {
-      if (state.crosses & (1 << ((i * COL_COUNT) + i))) {
+      if (state.crosses & (1 << ((i * 3) + i))) {
         turnOnLED(CELL_X, i, i);
         DELAY_FUNCTION(DELAY);
         turnOffLED(CELL_X, i, i);
       }
-      if (state.noughts & (1 << ((i * COL_COUNT) + i))) {
+      if (state.noughts & (1 << ((i * 3) + i))) {
         turnOnLED(CELL_O, i, i);
         DELAY_FUNCTION(DELAY);
         turnOffLED(CELL_O, i, i);
@@ -75,12 +75,12 @@ static inline void drawGameDiag(GameState state, bool ismain) {
     }
   } else {
     for (uint8_t i = 0; i < 3; i++) {
-      if (state.crosses & (1 << ((i * COL_COUNT) + (2 - i)))) {
+      if (state.crosses & (1 << ((i * 3) + (2 - i)))) {
         turnOnLED(CELL_X, i, 2 - i);
         DELAY_FUNCTION(DELAY);
         turnOffLED(CELL_X, i, 2 - i);
       }
-      if (state.noughts & (1 << ((i * COL_COUNT) + (2 - i)))) {
+      if (state.noughts & (1 << ((i * 3) + (2 - i)))) {
         turnOnLED(CELL_O, i, 2 - i);
         DELAY_FUNCTION(DELAY);
         turnOffLED(CELL_O, i, 2 - i);
