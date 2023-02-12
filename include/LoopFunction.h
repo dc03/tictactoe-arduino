@@ -12,51 +12,9 @@
 #include <LEDHelpers.h>
 #include <SlideSwitch.h>
 
-// constexpr uint8_t statearr[][3] = {
-//     {CELL_X | CELL_O, CELL_X | CELL_O, CELL_X | CELL_O},
-//     {CELL_X | CELL_O, CELL_X | CELL_O, CELL_X | CELL_O},
-//     {CELL_X | CELL_O, CELL_X | CELL_O, CELL_X | CELL_O},
-// };
-
-// GameState state = makeState(0b000111000, 0b010000101);
 extern GameState state;
-// GameState state = makeState(0, 0);
 
 static inline void tictactoe_loop() {
-  // for (uint8_t i = 0; i < ROW_COUNT; i++) {
-  //   flashGameRow(state, i);
-  // }
-  // for (uint8_t i = 0; i < COL_COUNT; i++) {
-  //   flashGameCol(state, i);
-  // }
-  // flashGameDiag(state, true);
-  // flashGameDiag(state, false);
-  // flashGameState(state);
-  // flashGameState(state);
-  // for (int i = 0; i < BUTTON_COUNT; i++) {
-  //   uint8_t value = digitalRead(BUTTONS[i]);
-  //   if (!value) {
-  //     Serial.print(i);
-  //     Serial.println(" was pressed");
-  //   }
-  // }
-  // uint8_t button_pressed = pressedButton();
-  // // while (!(button_pressed = pressedButton())) {}
-  // // while (pressedButton() == button_pressed) {}
-  // if (button_pressed) {
-  //   uint8_t row = (button_pressed >> 1) & 0b11;
-  //   uint8_t col = (button_pressed >> 3) & 0b11;
-  //   if (slideSwitchPosition() == SLIDE_IS_LEFT) {
-  //     turnOnLED(CELL_X, row, col);
-  //     DELAY_FUNCTION(DELAY);
-  //     turnOffLED(CELL_X, row, col);
-  //   }
-  //   if (slideSwitchPosition() == SLIDE_IS_RIGHT) {
-  //     turnOnLED(CELL_O, row, col);
-  //     DELAY_FUNCTION(DELAY);
-  //     turnOffLED(CELL_O, row, col);
-  //   }
-  // }
   drawGameState(state);
   uint8_t button_pressed = pressedButton();
   if (button_pressed) {
