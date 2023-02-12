@@ -7,10 +7,10 @@
 #include <Config.h>
 
 static inline void turnOffAllLEDs() {
-  for (uint8_t i = 0; i < ROW_COUNT; i++) {
+  for (uint8_t i = 0; i < LED_ROW_COUNT; i++) {
     digitalWrite(ROWS[i], HIGH);
   }
-  for (uint8_t i = ROW_COUNT; i < PIN_COUNT; i++) {
+  for (uint8_t i = LED_ROW_COUNT; i < PIN_COUNT; i++) {
     digitalWrite(PINS[i], LOW);
   }
 }
