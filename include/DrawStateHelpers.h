@@ -27,6 +27,30 @@ static inline void drawGameState(GameState state) {
   }
 }
 
+static inline void drawGameStateEquiDelay(GameState state) {
+  uint32_t mask = 1;
+  bool something_changed = false;
+  for (uint8_t i = 0; i < 3; i++) {
+    for (uint8_t j = 0; j < 3; j++) {
+      something_changed = false;
+      if (state.crosses & mask) {
+        turnOnLED(CELL_X, i, j);
+        DELAY_FUNCTION(DELAY);
+        turnOffLED(CELL_X, i, j);
+        something_changed = true;
+      }
+      if (state.noughts & mask) {
+        turnOnLED(CELL_O, i, j);
+        DELAY_FUNCTION(DELAY);
+        turnOffLED(CELL_O, i, j);
+        something_changed = true;
+      }
+      if (!something_changed) { DELAY_FUNCTION(DELAY); }
+      mask <<= 1;
+    }
+  }
+}
+
 static inline void drawGameRow(GameState state, uint8_t row) {
   for (uint8_t j = 0; j < 3; j++) {
     uint16_t mask = 1 << ((row * 3) + j);

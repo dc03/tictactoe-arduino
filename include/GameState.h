@@ -52,6 +52,16 @@ static inline GameState stateFromArray(const uint8_t (&statearr)[rows][cols]) {
   return state;
 }
 
+static inline GameState setCellWithPlayer(GameState state, uint8_t row, uint8_t col, PlayerState player) {
+  uint32_t mask = 1 << (row * 3 + col);
+  if (player == PLAYER_X) {
+    state.crosses |= mask;
+  } else if (player == PLAYER_O) {
+    state.noughts |= mask;
+  }
+  return state;
+}
+
 static inline GameState trySetCell(GameState state, uint8_t row, uint8_t col) {
   uint32_t mask = 1 << (row * 3 + col);
   if (state.player == PLAYER_X && !(state.noughts & mask)) {
@@ -99,6 +109,28 @@ static inline GameWinPosition tryDetectWin(GameState state) {
     return DRAW_;
   }
   return NONE_;
+}
+
+// https://stackoverflow.com/questions/109023/count-the-number-of-set-bits-in-a-32-bit-integer
+static inline uint8_t numberOfSetBits(uint32_t i) {
+  // Java: use int, and use >>> instead of >>. Or use Integer.bitCount()
+  // C or C++: use uint32_t
+  i = i - ((i >> 1) & 0x55555555);                // add pairs of bits
+  i = (i & 0x33333333) + ((i >> 2) & 0x33333333); // quads
+  i = (i + (i >> 4)) & 0x0F0F0F0F;                // groups of 8
+  return (i * 0x01010101) >> 24;                  // horizontal sum of bytes
+}
+
+static inline uint8_t setPlacesX(GameState state) {
+  return numberOfSetBits(state.crosses);
+}
+
+static inline uint8_t setPlacesO(GameState state) {
+  return numberOfSetBits(state.noughts);
+}
+
+static inline uint8_t setPlaces(GameState state) {
+  return numberOfSetBits(state.crosses) + numberOfSetBits(state.noughts);
 }
 
 #endif
