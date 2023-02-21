@@ -1,3 +1,5 @@
+If:
+  PathExclude: [.*gen-minimax.cpp]
 CompileFlags:
   Add: [-Wall, -Wextra, -Wpedantic,  
         -I/home/dc/Documents/PlatformIO/Projects/TicTacToe/include/,
