@@ -67,7 +67,9 @@ static inline void tictactoe_setup() {
     case SLIDE_IS_RIGHT: tictactoe_loop = tictactoe_1P_mode; break;
   }
 
+#if INTRO_SHOW
   flashIntro();
+#endif
 }
 
 #endif
