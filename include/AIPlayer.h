@@ -1,5 +1,8 @@
 #pragma once
 
+/* Copyright (C) 2023 Dhruv Chawla */
+/* See LICENSE at project root for license details */
+
 #ifndef AI_PLAYER_H
 #define AI_PLAYER_H
 

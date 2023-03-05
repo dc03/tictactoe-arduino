@@ -1,5 +1,8 @@
 #pragma once
 
+/* Copyright (C) 2023 Dhruv Chawla */
+/* See LICENSE at project root for license details */
+
 #ifndef PRINT_BOARD_H
 #define PRINT_BOARD_H
 

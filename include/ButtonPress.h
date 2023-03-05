@@ -1,5 +1,8 @@
 #pragma once
 
+/* Copyright (C) 2023 Dhruv Chawla */
+/* See LICENSE at project root for license details */
+
 #ifndef BUTTON_PRESS_H
 #define BUTTON_PRESS_H
 

@@ -1,5 +1,8 @@
 #pragma once
 
+/* Copyright (C) 2023 Dhruv Chawla */
+/* See LICENSE at project root for license details */
+
 #include "FlashStateHelpers.h"
 #ifndef SETUP_FUNCTION_H
 #define SETUP_FUNCTION_H

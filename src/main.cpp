@@ -1,3 +1,6 @@
+/* Copyright (C) 2023 Dhruv Chawla */
+/* See LICENSE at project root for license details */
+
 // #define USE_SERIAL_CONSOLE
 // #define NO_SHOW_INTRO
 // #define AI_DEBUG_MODE

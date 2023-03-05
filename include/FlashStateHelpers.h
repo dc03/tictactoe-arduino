@@ -1,5 +1,8 @@
 #pragma once
 
+/* Copyright (C) 2023 Dhruv Chawla */
+/* See LICENSE at project root for license details */
+
 #ifndef FLASH_STATE_HELPERS_H
 #define FLASH_STATE_HELPERS_H
 
