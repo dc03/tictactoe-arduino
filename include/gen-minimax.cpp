@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <array>
 #include <bitset>
 #include <cassert>
@@ -230,6 +231,12 @@ struct GameStateTree {
     node->set_win(is_winning);
     return node;
   }
+
+  std::size_t numSolutions() { return nodes.size(); }
+
+  std::size_t numWinningSolutions() {
+    return std::count_if(state_map.begin(), state_map.end(), [](const auto &x) { return x.second->is_winning; });
+  }
 };
 
 int getScore(GameState state, uint8_t depth, PlayerState curr, PlayerState player, PlayerState opponent) {
@@ -248,8 +255,12 @@ int getScore(GameState state, uint8_t depth, PlayerState curr, PlayerState playe
 int minimax(GameState state, GameStateTree &tree, GameStateTreeNode *parent, int depth, bool isMax, PlayerState player,
     PlayerState opponent) {
   int score = getScore(state, depth, isMax ? player : opponent, player, opponent);
-  if (score == MAX_SCORE || score == -MAX_SCORE) {
+  if (score > 0) {
     parent->add_child(tree.push_node(state, parent, true));
+    return score;
+  }
+  if (score < 0) {
+    parent->add_child(tree.push_node(state, parent, false));
     return score;
   }
   if (setPlaces(state) == 9) {
@@ -265,7 +276,7 @@ int minimax(GameState state, GameStateTree &tree, GameStateTreeNode *parent, int
           state = setCellWithPlayer(state, i, j, player);
           auto *node = tree.push_node(state, parent, false);
           parent->add_child(node);
-          best = std::max(best, minimax(state, tree, node, depth + 1, !isMax, player, opponent));
+          best = std::max(best, minimax(state, tree, node, depth + 1, false, player, opponent));
           state = unsetCellWithPlayer(state, i, j, player);
         }
       }
@@ -279,7 +290,7 @@ int minimax(GameState state, GameStateTree &tree, GameStateTreeNode *parent, int
           state = setCellWithPlayer(state, i, j, opponent);
           auto *node = tree.push_node(state, parent, false);
           parent->add_child(node);
-          best = std::min(best, minimax(state, tree, node, depth + 1, !isMax, player, opponent));
+          best = std::min(best, minimax(state, tree, node, depth + 1, true, player, opponent));
           state = unsetCellWithPlayer(state, i, j, opponent);
         }
       }
@@ -302,6 +313,12 @@ std::pair<int, int> findBestMove(
           bestVal = val;
           bestMove.first = i;
           bestMove.second = j;
+        } else if (val == bestVal) {
+          if (tryDetectWin(state) != GameWinPosition::NONE_ && state.player == player) {
+            bestVal = val;
+            bestMove.first = i;
+            bestMove.second = j;
+          }
         }
       }
     }
@@ -317,7 +334,8 @@ GameStateTree getAllSolutions() {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
       GameState state = trySetCell(makeState(), i, j);
-      minimax(state, tree, root, 0, false, PLAYER_O, PLAYER_X);
+      GameStateTreeNode *node = tree.push_node(state, root);
+      findBestMove(tree, node, state, PLAYER_O, PLAYER_X);
     }
   }
   return tree;
@@ -341,12 +359,16 @@ void prettyPrint(GameState state) {
 int main() {
   GameStateTree tree{};
   GameStateTreeNode *root = tree.push_node(makeState(), nullptr);
-  GameState state = makeState(0b101001000, 0b010110000);
+  GameState state = makeState(0b001001000, 0b100110000);
   PlayerState player = PLAYER_O;
   PlayerState opponent = player == PLAYER_X ? PLAYER_O : PLAYER_X;
   auto best = findBestMove(tree, root, state, player, opponent);
   std::cout << best.first << ' ' << best.second << '\n';
   prettyPrint(setCellWithPlayer(state, best.first, best.second, player));
+  // auto mytree = getAllSolutions();
+  // std::cout << mytree.numSolutions() << '\n';
+  // std::cout << mytree.numWinningSolutions() << '\n';
+  // std::cout << mytree.root->children.size() << '\n';
   // GameState state = makeState();
   // for (int i = 0; i < 3; i++) {
   //     for (int j = 0; j < 3; j++) {
