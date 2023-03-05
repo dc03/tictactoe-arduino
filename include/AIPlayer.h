@@ -89,7 +89,7 @@ static inline int8_t minimax(GameState state, uint8_t depth, bool is_max) {
           state = setCellWithPlayer(state, i, j, PLAYER_X);
           best = min(best, minimax(state, depth + 1, true));
 #if !AI_EASY
-          if (tryDetectWin(setCellWithPlayer(state, i, j, PLAYER_O))) { best -= 10; }
+          if (tryDetectWin(setCellWithPlayer(state, i, j, PLAYER_O))) { return best - 10; }
 #endif
           state = unsetCellWithPlayer(state, i, j, PLAYER_X);
         }
