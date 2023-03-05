@@ -1,4 +1,7 @@
 // #define USE_SERIAL_CONSOLE
+// #define NO_SHOW_INTRO
+// #define AI_DEBUG_MODE
+// #define AI_EASY_MODE
 
 #include <LoopFunction.h>
 #include <SetupFunction.h>
