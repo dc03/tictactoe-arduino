@@ -11,6 +11,24 @@
 #define IF_SERIAL(x)
 #endif
 
+#ifdef NO_SHOW_INTRO
+#define INTRO_SHOW 0
+#else
+#define INTRO_SHOW 1
+#endif
+
+#ifdef AI_DEBUG_MODE
+#define AI_DEBUG_PRINT 1
+#else
+#define AI_DEBUG_PRINT 0
+#endif
+
+#ifdef AI_EASY_MODE
+#define AI_EASY 1
+#else
+#define AI_EASY 0
+#endif
+
 #if USE_SERIAL == 0
 #define HardwareSerial_h
 #endif
