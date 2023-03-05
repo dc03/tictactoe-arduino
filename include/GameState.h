@@ -10,6 +10,7 @@
 enum PlayerState : uint8_t {
   PLAYER_X = 0,
   PLAYER_O = 1,
+  UNKNOWN = 2,
 };
 
 enum GameWinPosition : uint8_t {
@@ -60,6 +61,37 @@ static inline GameState setCellWithPlayer(GameState state, uint8_t row, uint8_t 
     state.noughts |= mask;
   }
   return state;
+}
+
+static inline GameState unsetCellWithPlayer(GameState state, uint8_t row, uint8_t col, PlayerState player) {
+  uint32_t mask = 1 << (row * 3 + col);
+  if (player == PLAYER_X && (state.crosses & mask)) {
+    state.crosses ^= mask;
+  } else if (player == PLAYER_O && (state.noughts & mask)) {
+    state.noughts ^= mask;
+  }
+  return state;
+}
+
+static inline bool isSetCell(GameState state, uint8_t row, uint8_t col) {
+  uint32_t mask = 1 << (row * 3 + col);
+  return ((state.crosses | state.noughts) & mask) != 0;
+}
+
+static inline bool isCellEmpty(GameState state, uint8_t row, uint8_t col) {
+  uint32_t mask = 1 << (row * 3 + col);
+  return !((state.crosses & mask) || (state.noughts & mask));
+}
+
+static inline PlayerState whoHasCell(GameState state, uint8_t row, uint8_t col) {
+  uint32_t mask = 1 << (row * 3 + col);
+  if (state.crosses & mask) {
+    return PLAYER_X;
+  } else if (state.noughts & mask) {
+    return PLAYER_O;
+  } else {
+    return UNKNOWN;
+  }
 }
 
 static inline GameState trySetCell(GameState state, uint8_t row, uint8_t col) {
